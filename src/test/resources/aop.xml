@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--命名空间在xml中的作用也是值得研究的 -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	
+	<!--理解AOP实现原理  -->	
+	
+	<bean id ="aspectBean" class ="demon.springframework.aop.test.TestAspect" />
+	<bean id ="aService" class ="demon.springframework.aop.service.impl.AserviceImpl" />
+	<bean id ="bService" class ="demon.springframework.aop.service.impl.BserviceImpl" />
+	
+	<aop:config>
+		<aop:aspect id ="TestAspect" ref ="aspectBean">
+			<!--找寻符合切点的类来实现切面插入  -->
+			<aop:pointcut id ="businessService" expression ="execution(* demon.springframework.service.impl.*.*(..))" />
+			<aop:before pointcut-ref ="businessService" method="doBefore"/>
+			<aop:after pointcut-ref="businessService" method="doAfter"/>  
+            <aop:around pointcut-ref="businessService" method="doAround"/>  
+            <aop:after-throwing pointcut-ref="businessService" method="doThrowing" throwing="ex"/>
+		</aop:aspect>
+	</aop:config>	
+	
+	
+</beans>
