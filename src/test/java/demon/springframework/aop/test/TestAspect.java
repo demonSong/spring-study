@@ -12,6 +12,7 @@ public class TestAspect {
 				+ jp.getSignature().getName());
 	}
 
+	//方法执行延时到了doAround中去完成,体现了joinPoint的作用
 	public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
 		long time = System.currentTimeMillis();
 		Object retVal = pjp.proceed();

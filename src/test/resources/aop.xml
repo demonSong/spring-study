@@ -18,7 +18,7 @@
 	<aop:config>
 		<aop:aspect id ="TestAspect" ref ="aspectBean">
 			<!--找寻符合切点的类来实现切面插入  -->
-			<aop:pointcut id ="businessService" expression ="execution(* demon.springframework.service.impl.*.*(..))" />
+			<aop:pointcut id ="businessService" expression ="execution(* demon.springframework.aop.service.impl.*.*(..))" />
 			<aop:before pointcut-ref ="businessService" method="doBefore"/>
 			<aop:after pointcut-ref="businessService" method="doAfter"/>  
             <aop:around pointcut-ref="businessService" method="doAround"/>  
@@ -26,5 +26,9 @@
 		</aop:aspect>
 	</aop:config>	
 	
+	<bean id="aspectBeanTwo" class="demon.springframework.aop.test.TestAnnotationAspect" />
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>  
+    <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" /> 
 	
 </beans>
